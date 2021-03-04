@@ -31,7 +31,6 @@ steps:
 - task: Docker@2
   inputs:
     repository: spring-starter
-    containerRegistry: 'redhat registsry'
     command: 'build'
     Dockerfile: '**/Dockerfile'
     tags: 
