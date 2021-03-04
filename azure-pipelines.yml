@@ -17,16 +17,17 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: x64
     goals: 'package'
-- task: PublishPipelineArtifact@1
+- task: PublishBuildArtifacts@1
   inputs:
-    targetPath: '$(Pipeline.Workspace)/target/*.war'
-    artifact: 'buildpipeline'
-    publishLocation: 'pipeline'
-- task: DownloadPipelineArtifact@2
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+- task: DownloadBuildArtifacts@0
   inputs:
     buildType: 'current'
+    downloadType: 'specific'
     itemPattern: '**.war'
-    targetPath: '$(Pipeline.Workspace)'
+    downloadPath: '$(System.ArtifactsDirectory)'
 - task: Docker@2
   inputs:
     containerRegistry: 'redhat registsry'
