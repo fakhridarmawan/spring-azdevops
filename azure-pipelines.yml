@@ -35,8 +35,6 @@ steps:
     command: 'build'
     Dockerfile: '**/Dockerfile'
     tags: 
-      $(Build.BuildId)
-      $(UPDATE_TIMESTAMP)
       latest
 - task: CmdLine@2
   inputs:
