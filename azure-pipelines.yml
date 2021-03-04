@@ -17,12 +17,24 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: x64
     goals: 'package'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)/target/*.war'
+    artifact: 'buildpipeline'
+    publishLocation: 'pipeline'
+- task: DownloadPipelineArtifact@2
+  inputs:
+    buildType: 'current'
+    itemPattern: '**.war'
+    targetPath: '$(Pipeline.Workspace)'
 - task: Docker@2
   inputs:
+    containerRegistry: 'redhat registsry'
     command: 'build'
     Dockerfile: '**/Dockerfile'
 - task: CmdLine@2
   inputs:
     script: |
-      echo Write your commands here
-      echo Hello world
+      oc login -u developer -p developer https://api.crc.testing:6443 --insecure-skip-tls-verify=true
+      docker login -u openshift -p $(oc whoami -t) default-route-openshift-image-registry.apps-crc.testing --tls-verify=false
+      docker push starter-spring-1.war default-route-openshift-image-registry.apps-crc.testing/spring/spring-starter:latest --tls-verify=false
