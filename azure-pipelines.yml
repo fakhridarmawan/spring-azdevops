@@ -40,4 +40,4 @@ steps:
     script: |
       oc login -u developer -p developer https://api.crc.testing:6443 --insecure-skip-tls-verify=true
       docker login -u openshift -p $(oc whoami -t) default-route-openshift-image-registry.apps-crc.testing --tls-verify=false
-      docker push starter-spring default-route-openshift-image-registry.apps-crc.testing/spring/spring-starter:latest --tls-verify=false
+      docker push spring-starter default-route-openshift-image-registry.apps-crc.testing/spring/spring-starter:latest --tls-verify=false
