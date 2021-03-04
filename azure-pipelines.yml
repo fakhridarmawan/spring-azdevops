@@ -17,3 +17,12 @@ steps:
     jdkVersionOption: '1.8'
     jdkArchitectureOption: x64
     goals: 'package'
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Write your commands here
+      echo Hello world
